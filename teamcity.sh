@@ -14,10 +14,10 @@ cd $(readlink -f $(dirname $0))
 source config
 
 
-[ -d venv ] && source venv/bin/activate || \
+[ -d venv ] && source $(find -name activate) || \
 {
     python -m venv venv
-    source venv/bin/activate
+    source $(find -name activate) || exit 1
     pip install -r requirements.txt
 }
 
