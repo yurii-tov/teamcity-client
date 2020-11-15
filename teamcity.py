@@ -34,11 +34,11 @@ def show_build_types():
     tids = [t['id'] for t in tc.get_build_types()['buildType']]
     bts = [tc.get_build_type(tid) for tid in tids]
     bts.sort(key=lambda x: x['projectName'])
-    keys = ['projectName', 'id', 'name']
+    keys = ['id', 'name']
     pt = PrettyTable()
-    pt.field_names = keys
-    for bt in bts:
-        pt.add_row([bt[k] for k in keys])
+    pt.field_names = ['#'] + keys
+    for n,bt in enumerate(bts, start=1):
+        pt.add_row([n] + [bt[k] for k in keys])
 
     print(pt)
 
