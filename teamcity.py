@@ -11,15 +11,19 @@ def show_last_build(buildTypeId):
     bt = tc.get_build_type(buildTypeId)
     print('{} [{}]'.format(bt['name'], bt['id']))
 
-    lbs = tc.get_builds(build_type_id=buildTypeId, count=1)['build']
+    running = tc.get_builds(build_type_id=buildTypeId, count=1, running='true')['build']
+    completed = tc.get_builds(build_type_id=buildTypeId, count=1)['build']
+    lbs = running or completed
     if not lbs:
         print('No builds found')
         return
     lbid = lbs[0]['id']
     b = tc.get_build_by_build_id(lbid)
     for k in ['startDate', 'finishDate']:
-        dt = parse(b[k], fuzzy=True)
-        b[k] = dt.strftime("%Y-%m-%d %H:%M:%S")
+        if b.get(k):
+            dt = parse(b[k], fuzzy=True)
+            b[k] = dt.strftime("%Y-%m-%d %H:%M:%S")
+        else: b[k] = '?'
 
     keys = ['id', 'number', 'state', 'status', 'startDate', 'finishDate']
     pt = PrettyTable()
