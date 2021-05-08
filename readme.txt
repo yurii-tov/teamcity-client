@@ -10,5 +10,5 @@
    - Place shortcut to startup script into .bashrc:
      (Example)
      function teamcity() { "c:/Users/Jury/work/teamcity-client/teamcity.sh" "$@" | iconv -f cp1251 -t utf-8 ; }
-   - Invoke like this:
-     $ teamcity
+   - Read help:
+     $ teamcity -h

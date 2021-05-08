@@ -4,14 +4,13 @@
 cd $(readlink -f $(dirname $0))
 
 
-[ -f config ] || {
-    cp config.example config
+[ -f settings.json ] || {
+    cp settings.json.example settings.json
     echo Config file not found
-    echo New file has been created: $(readlink -f config)
+    echo New file has been created: $(readlink -f settings.json)
     echo Please setup desirable values and try again
     exit 1
 }
-source config
 
 
 [ -d venv ] && source $(find -name activate) || \

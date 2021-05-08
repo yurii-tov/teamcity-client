@@ -1,0 +1,12 @@
+{
+    "teamcity": {
+        "username": "yurii",
+        "password": "hXH4x82RA6I3iO9",
+        "server": "localhost",
+        "port": 8111
+    },
+    "telegram": {
+        "chat_id": "your-chat-id",
+        "bot_token": "your-bot-token"
+    }
+}

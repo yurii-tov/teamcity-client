@@ -1,4 +1,0 @@
-export TEAMCITY_USER=yurii
-export TEAMCITY_PASSWORD=hXH4x82RA6I3iO9
-export TEAMCITY_HOST=localhost
-export TEAMCITY_PORT=8111
