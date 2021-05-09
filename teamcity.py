@@ -1,4 +1,3 @@
-import sys
 import argparse
 from pyteamcity import TeamCity
 from prettytable import PrettyTable
