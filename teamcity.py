@@ -101,7 +101,7 @@ def watch_builds(bt_ids):
 
             builds[btid] = lbid
 
-        time.sleep(10)
+        time.sleep(global_settings['polling_interval'])
 
 
 def tg_message_build(b):

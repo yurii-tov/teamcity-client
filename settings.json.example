@@ -5,6 +5,7 @@
         "server": "localhost",
         "port": 8111
     },
+    "polling_interval": 30,
     "telegram": {
         "chat_id": "your-chat-id",
         "bot_token": "your-bot-token"
