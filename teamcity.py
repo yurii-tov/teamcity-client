@@ -112,7 +112,7 @@ def tg_message_build(b):
     if b['status'] == 'FAILURE':
         sign = '❌'
 
-    message = "{} <b>{}</b>\n<i>{}</i>\n<pre>{}</pre>".format(
+    message = "{} <b>{}</b>\n<i>{}</i>\n<pre>{}</pre>\n<a href=\"{}\">View</a>".format(
         sign,
         b['title'],
         b['statusText'],
@@ -125,7 +125,8 @@ Finish: {}
     b['number'],
     b['startDate'],
     b['finishDate']
-)
+),
+        b['webUrl'].replace('localhost', '127.0.0.1')
     )
 
     payload = dict(
