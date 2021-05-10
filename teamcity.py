@@ -62,9 +62,8 @@ def print_build(b):
     else: print('No builds found')
 
 
-def print_build_types():
-    tids = [t['id'] for t in tc.get_build_types()['buildType']]
-    bts = [tc.get_build_type(tid) for tid in tids]
+def print_build_types(btids):
+    bts = [tc.get_build_type(tid) for tid in btids]
     bts.sort(key=lambda x: x['projectName'])
     keys = ['projectId', 'id', 'name']
     pt = PrettyTable()
@@ -73,14 +72,6 @@ def print_build_types():
         pt.add_row([bt[k] for k in keys])
 
     print(pt)
-
-
-def print_summary():
-    info = tc.get_server_info()
-    print('Teamcity {}\n{}\n'.format(
-        info['version'],
-        tc.base_base_url))
-    print_build_types()
 
 
 ##################
@@ -147,18 +138,31 @@ Finish: {}
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-w', '--watch',
-                        help='watch (and report about) fresh builds',
-                        action='store_true')
+    parser.add_argument(
+        'command',
+        choices=['run', 'watch', 'status', 'info']
+    )
     parser.add_argument('build_type_id',
                         nargs='*',
                         help='build type ids to operate on')
     args = parser.parse_args()
-    if args.watch:
-        watch_builds(args.build_type_id or get_all_bts())
-    elif args.build_type_id:
-        for x in args.build_type_id:
+
+    btids = args.build_type_id or get_all_bts()
+    if args.command == 'run':
+        for x in btids:
+            tc.trigger_build(x)
+
+        print('Builds triggered: {}'.format(btids))
+    elif args.command == 'watch':
+        watch_builds(btids)
+    elif args.command == 'status':
+        for x in btids:
             print_build(get_last_build(x))
             print(end='\n\n')
-    else:
-        print_summary()
+    elif args.command == 'info':
+        info = tc.get_server_info()
+        print('Teamcity {}\n{}\n'.format(
+            info['version'],
+            tc.base_base_url))
+        print_build_types(btids)
+
