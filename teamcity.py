@@ -103,7 +103,7 @@ def tg_message_build(b):
     if b['status'] == 'FAILURE':
         sign = '❌'
 
-    message = "{} <b>{}</b>\n<i>{}</i>\n<pre>{}</pre>\n<a href=\"{}\">View</a>".format(
+    message = "{} <b>{}</b>\n<i>{}</i>\n<pre>{}</pre><a href=\"{}\">View</a>".format(
         sign,
         b['title'],
         b['statusText'],
