@@ -81,17 +81,35 @@ def print_build_types(btids):
 
 def watch_builds(bt_ids):
     builds = dict()
+    fail_count = 1
+    sleep_amount = 5
+    print('Watching builds:')
+    for btid in bt_ids:
+        print('\t{}'.format(btid))
+
+    print('')
     while True:
-        for btid in bt_ids:
-            lbid_stored = builds.get(btid)
-            lbids = tc.get_builds(build_type_id=btid, count=1)['build']
-            lbid = lbids and lbids[0]['id']
-            if lbid_stored and lbid_stored != lbid:
-                tg_message_build(get_last_build(btid))
+        try:
+            for btid in bt_ids:
+                lbid_stored = builds.get(btid)
+                lbids = tc.get_builds(build_type_id=btid, count=1)['build']
+                lbid = lbids and lbids[0]['id']
+                if lbid_stored and lbid_stored != lbid:
+                    b = get_last_build(btid)
+                    print('')
+                    print_build(b)
+                    tg_message_build(get_last_build(btid))
 
-            builds[btid] = lbid
+                builds[btid] = lbid
 
-        time.sleep(global_settings['polling_interval'])
+            fail_count = 1
+            time.sleep(global_settings['polling_interval'])
+
+        except:
+            timeout = sleep_amount * fail_count
+            print('Something going wrong! Sleeping for {} seconds'.format(timeout))
+            time.sleep(timeout)
+            fail_count *= 2
 
 
 def tg_message_build(b):
