@@ -82,7 +82,7 @@ def print_build_types(btids):
 def watch_builds(bt_ids):
     builds = dict()
     fail_count = 1
-    sleep_amount = 5
+    sleep_amount = global_settings['polling_interval']
     print('Watching builds:')
     for btid in bt_ids:
         print('\t{}'.format(btid))
@@ -103,7 +103,7 @@ def watch_builds(bt_ids):
                 builds[btid] = lbid
 
             fail_count = 1
-            time.sleep(global_settings['polling_interval'])
+            time.sleep(sleep_amount)
 
         except:
             timeout = sleep_amount * fail_count
